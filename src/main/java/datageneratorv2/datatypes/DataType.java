@@ -4,7 +4,7 @@ public class DataType {
 	static final String DATATYPE_INTEGER = "\\d+";
 	static final String DATATYPE_DOUBLE = "\\d*[.]\\d+";
 	
-	public String getDataType(String s) {
+	public static String getDataType(String s) {
 		if (s.matches(DATATYPE_INTEGER)) {
 			return "Integer";
 		}

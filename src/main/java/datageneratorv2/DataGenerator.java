@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
 import com.opencsv.CSVReader;
@@ -27,7 +26,6 @@ public class DataGenerator {
 			FileReader fileReader = new FileReader(file);
 			try (CSVReader csvReader = new CSVReader(fileReader)) {
 				lines = csvReader.readAll();
-				// lines.forEach(l -> System.out.println(Arrays.toString(l)));
 			} catch (IOException | CsvException e) {
 				e.printStackTrace();
 			}

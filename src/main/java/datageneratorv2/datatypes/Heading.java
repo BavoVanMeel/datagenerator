@@ -2,7 +2,7 @@ package datageneratorv2.datatypes;
 
 import java.util.List;
 
-public class Heading {
+public class Heading {	
 	String headingName;
 	List<HeadingDataType> headingDateType;
 	
@@ -10,8 +10,20 @@ public class Heading {
 		this.headingName = headingName;
 	}
 	
+	public String getHeadingName() {
+		return headingName;
+	}
+
+	public void setHeadingName(String headingName) {
+		this.headingName = headingName;
+	}
+	
 	public void addHeadingDataType(HeadingDataType hdt) {
 		headingDateType.add(hdt);
+	}
+
+	public List<HeadingDataType> getHeadingDateType() {
+		return headingDateType;
 	}
 
 	@Override

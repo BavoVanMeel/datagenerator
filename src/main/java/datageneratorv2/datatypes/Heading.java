@@ -1,5 +1,6 @@
 package datageneratorv2.datatypes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Heading {	
@@ -8,6 +9,7 @@ public class Heading {
 	
 	public Heading(String headingName) {
 		this.headingName = headingName;
+		headingDateType = new ArrayList<HeadingDataType>();
 	}
 	
 	public String getHeadingName() {
@@ -22,8 +24,29 @@ public class Heading {
 		headingDateType.add(hdt);
 	}
 
-	public List<HeadingDataType> getHeadingDateType() {
+	public List<HeadingDataType> getHeadingDateTypes() {
 		return headingDateType;
+	}
+	
+	public HeadingDataType getHeadingDataType(String headingDataTypeName) {
+		for (HeadingDataType hdt : headingDateType) {
+			if (hdt.getName() == headingDataTypeName) {
+				return hdt;
+			}
+		}
+		return null;
+	}
+	
+	public boolean containsHeadingDataType(String headingDataTypeName) {
+		if (headingDateType.isEmpty()) {
+			return false;
+		}
+		for (HeadingDataType hdt : headingDateType) {
+			if (hdt.getName() == headingDataTypeName) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
@@ -32,7 +55,7 @@ public class Heading {
 		for (HeadingDataType hdt : headingDateType) {
 			dataTypes += hdt.toString();
 		}
-		return "Heading [headingName=" + headingName + ", headingDateType=" + dataTypes + "]";
+		return "Heading [headingName= " + headingName + ", headingDateType= " + dataTypes + "]";
 	}
 	
 }

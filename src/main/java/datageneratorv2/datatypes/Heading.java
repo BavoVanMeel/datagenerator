@@ -3,9 +3,11 @@ package datageneratorv2.datatypes;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Heading {	
-	String headingName;
-	List<HeadingDataType> headingDateType;
+public class Heading {
+	static final float PERCENTAGE = 0.90f;
+	
+	private String headingName;
+	private List<HeadingDataType> headingDateType;
 	
 	public Heading(String headingName) {
 		this.headingName = headingName;
@@ -48,6 +50,20 @@ public class Heading {
 		}
 		return false;
 	}
+	
+	public HeadingDataType getHighestHeadingDataType() {
+		HeadingDataType headingDataType = new HeadingDataType("Error");
+		Integer total = 0;
+		for (HeadingDataType hdt : headingDateType) {
+			total += hdt.getCount();
+		}
+		for (HeadingDataType hdt : headingDateType) {
+			if (hdt.getCount() / (float) total >= PERCENTAGE) {
+				headingDataType = hdt;
+			}
+		}
+		return headingDataType;
+	}
 
 	@Override
 	public String toString() {
@@ -55,7 +71,7 @@ public class Heading {
 		for (HeadingDataType hdt : headingDateType) {
 			dataTypes += hdt.toString();
 		}
-		return "Heading [headingName= " + headingName + ", headingDateType= " + dataTypes + "]";
+		return "Heading [headingName= " + headingName + ", headingDateType= " + dataTypes + "] with highest datatype: " + getHighestHeadingDataType().toString();
 	}
 	
 }

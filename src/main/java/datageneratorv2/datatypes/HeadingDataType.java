@@ -1,8 +1,8 @@
 package datageneratorv2.datatypes;
 
 public class HeadingDataType {
-	String name;
-	Integer count;
+	private String name;
+	private Integer count;
 	
 	public HeadingDataType(String name) {
 		this.name = name;

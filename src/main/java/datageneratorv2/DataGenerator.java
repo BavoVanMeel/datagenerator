@@ -9,14 +9,11 @@ import java.util.List;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 
-import datageneratorv2.datatypes.DataType;
 import datageneratorv2.datatypes.ProcessInputData;
 
 public class DataGenerator {
 
 	public static void main(String[] args) {
-//		idk(readCSV());
-//		getHeading(readCSV().get(0)[0]);
 		ProcessInputData.process(readCSV());
 	}
 	
@@ -36,18 +33,4 @@ public class DataGenerator {
 		}
 		return lines;
 	}
-	
-	public static void idk(List<String[]> lines) {
-		String[] parts = lines.get(1)[0].split(";");
-		for (String p : parts) {
-			String dataType = DataType.getDataType(p);
-			System.out.println(dataType);
-		}
-	}
-	
-	public static void getHeading(String heading) {
-		String[] parts = heading.split(";");
-		
-	}
-
 }

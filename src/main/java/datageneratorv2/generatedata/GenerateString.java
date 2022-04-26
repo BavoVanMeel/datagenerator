@@ -3,10 +3,12 @@ package datageneratorv2.generatedata;
 public class GenerateString implements GenerateData {
 
 	@Override
-	public void generateWrong() {
+	public String generateWrong() {
+		return "";
 	}
 
 	@Override
-	public void generateRight() {
+	public String generateRight() {
+		return "";
 	}
 }

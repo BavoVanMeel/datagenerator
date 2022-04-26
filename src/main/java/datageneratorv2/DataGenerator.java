@@ -9,7 +9,6 @@ import datageneratorv2.filehandling.CSVHandler;
 public class DataGenerator {
 
 	public static void main(String[] args) {
-		System.out.println("test");
 		List<String[]> csvInput = CSVHandler.readCSV("src/main/resources/accounts_to_migrate.csv");
 		List<Heading> headings = ProcessInputData.process(csvInput);
 		headings.forEach(h -> System.out.println(h));

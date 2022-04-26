@@ -1,6 +1,6 @@
 package datageneratorv2.generatedata;
 
 public interface GenerateData {
-	void generateWrong();
-	void generateRight();
+	String generateWrong();
+	String generateRight();
 }

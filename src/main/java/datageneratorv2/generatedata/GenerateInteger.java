@@ -27,6 +27,7 @@ public class GenerateInteger implements GenerateData {
 			break;
 		case 1:
 			// Wrong data type
+			returnValue = generateWrongDataType();
 			break;
 		case 2:
 			break;
@@ -51,4 +52,28 @@ public class GenerateInteger implements GenerateData {
 		Long randomLong = ThreadLocalRandom.current().nextLong(maxIntegerAmount, Long.MAX_VALUE);
 		return randomLong.toString();
 	}
+	
+	public String generateWrongDataType() {
+		String result = "";
+		Integer amountOfOptions = 1;
+		Integer option = ThreadLocalRandom.current().nextInt(0, amountOfOptions);
+		switch (option) {
+		case 0:
+			GenerateString generateString = new GenerateString(10);
+			result = generateString.generateRandomString();
+			break;
+		case 1:
+			result = generateDouble(1, 2);
+			break;
+		}
+		return result;
+	}
+	
+	public String generateDouble(Integer amountOfPositiveCharacters, Integer amountOfDecimals) {
+		Double positive = ThreadLocalRandom.current().nextDouble(0, amountOfPositiveCharacters);
+		Double decimal = ThreadLocalRandom.current().nextDouble(amountOfDecimals, 0);
+		Double result = positive + decimal;
+		return result.toString();
+	}
+	
 }

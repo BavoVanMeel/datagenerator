@@ -30,6 +30,8 @@ public class GenerateInteger implements GenerateData {
 			returnValue = generateWrongDataType();
 			break;
 		case 2:
+			// NULL 
+			returnValue = null;
 			break;
 		default:
 			break;

@@ -34,4 +34,18 @@ public class ProcessInputData {
 		}
 		return headings;
 	}
+	
+	public static void buildChooseDataTypeMenu(List<Heading> headings) {
+		String explanation = "This menu generates a list of all the column names and their most likely  \n" + 
+				"of the input file. You can still change the datatype for each column by entering \n" + 
+				"the column ID. Press enter. You will then be asked to type the correct datatype \n" + 
+				"name. Press enter. You can repeat this proces for every datatype that you want to \n" + 
+				"change. As long a there are 'Error' values in the datatype column, you're not able \n" + 
+				"to continue. When you're satisfied, press x to continue. \n";
+		System.out.println(explanation);
+		System.out.format("%5s%20s%20s", "ID", "COLUMN NAME", "DATATYPE \n");
+		for (int i = 0; i < headings.size(); i++) {
+			System.out.format("%5d%20s%20s", i, headings.get(i).getHeadingName(), headings.get(i).getHighestHeadingDataType().getName() + "\n");
+		}
+	}
 }

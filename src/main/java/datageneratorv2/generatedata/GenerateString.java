@@ -16,7 +16,7 @@ public class GenerateString implements GenerateData {
 
 	@Override
 	public String generateRight() {
-		return "";
+		return generateRandomString();
 	}
 	
 	public String generateRandomString() {

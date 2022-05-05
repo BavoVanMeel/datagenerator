@@ -11,6 +11,8 @@ public class DataGenerator {
 	public static void main(String[] args) {
 		List<String[]> csvInput = CSVHandler.readCSV("src/main/resources/accounts_to_migrate.csv");
 		List<Heading> headings = ProcessInputData.process(csvInput);
-		headings.forEach(h -> System.out.println(h));
+		// headings.forEach(h -> System.out.println(h));
+		
+		ProcessInputData.buildChooseDataTypeMenu(headings);
 	}
 }

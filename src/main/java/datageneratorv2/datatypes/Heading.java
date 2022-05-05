@@ -8,6 +8,7 @@ public class Heading {
 	
 	private String headingName;
 	private List<HeadingDataType> headingDateType;
+	private HeadingDataType highestHeadingDataType;
 	
 	public Heading(String headingName) {
 		this.headingName = headingName;
@@ -28,6 +29,15 @@ public class Heading {
 
 	public List<HeadingDataType> getHeadingDateTypes() {
 		return headingDateType;
+	}
+	
+	public HeadingDataType getHighestHeadingDataType() {
+		this.calculateHighestHeadingDataType();
+		return highestHeadingDataType;
+	}
+	
+	public void setHighestHeadingDataType(HeadingDataType datatype) {
+		this.highestHeadingDataType = datatype;
 	}
 	
 	public HeadingDataType getHeadingDataType(String headingDataTypeName) {
@@ -51,7 +61,7 @@ public class Heading {
 		return false;
 	}
 	
-	public HeadingDataType getHighestHeadingDataType() {
+	public HeadingDataType calculateHighestHeadingDataType() {
 		HeadingDataType headingDataType = new HeadingDataType("Error");
 		Integer total = 0;
 		for (HeadingDataType hdt : headingDateType) {
@@ -62,16 +72,20 @@ public class Heading {
 				headingDataType = hdt;
 			}
 		}
+		this.highestHeadingDataType = headingDataType;
 		return headingDataType;
 	}
 
 	@Override
 	public String toString() {
+		this.calculateHighestHeadingDataType();
 		String dataTypes = null;
 		for (HeadingDataType hdt : headingDateType) {
 			dataTypes += hdt.toString();
 		}
-		return "Heading [headingName= " + headingName + ", headingDateType= " + dataTypes + "] with highest datatype: " + getHighestHeadingDataType().toString();
+		return "Heading [headingName= " + headingName + ", "
+				+ "headingDateType= " + dataTypes + 
+				"] with highest datatype: " + highestHeadingDataType.getName();
 	}
 	
 }

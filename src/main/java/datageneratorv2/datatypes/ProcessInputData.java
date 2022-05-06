@@ -1,7 +1,9 @@
 package datageneratorv2.datatypes;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 public class ProcessInputData {
 	
@@ -43,9 +45,43 @@ public class ProcessInputData {
 				"change. As long a there are 'Error' values in the datatype column, you're not able \n" + 
 				"to continue. When you're satisfied, press x to continue. \n";
 		System.out.println(explanation);
+		printDataTypeMenu(headings);
+	}
+	
+	public static void printDataTypeMenu(List<Heading> headings) {
 		System.out.format("%5s%20s%20s", "ID", "COLUMN NAME", "DATATYPE \n");
 		for (int i = 0; i < headings.size(); i++) {
 			System.out.format("%5d%20s%20s", i, headings.get(i).getHeadingName(), headings.get(i).getHighestHeadingDataType().getName() + "\n");
 		}
+	}
+	
+	public static void updateDataTypes(List<Heading> headings) {
+		Scanner scanner = new Scanner(System.in);
+		String input = scanner.nextLine();
+		Integer inputInt = 0;
+		while (!input.equalsIgnoreCase("x")) {
+			try {
+				inputInt = Integer.parseInt(input);
+			} catch (NumberFormatException e) {
+				System.out.println("Not a number");
+			}
+			if (inputInt >= 0 && inputInt < headings.size()) {
+				headings = changeDataType(headings, inputInt);
+				printDataTypeMenu(headings);
+			}
+			input = scanner.nextLine();
+		} 
+		scanner.close();
+	}
+	
+	public static List<Heading> changeDataType(List<Heading> headings, Integer id) {
+		Scanner scanner = new Scanner(System.in);
+		String input = scanner.nextLine();
+		String[] validInput = new String[] {"String", "Integer"};
+		if (Arrays.asList(validInput).contains(input)) {
+			HeadingDataType headingDataType = new HeadingDataType(input);
+			headings.get(id).setHighestHeadingDataType(headingDataType);
+		}
+		return headings;
 	}
 }

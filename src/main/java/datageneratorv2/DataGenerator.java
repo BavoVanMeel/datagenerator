@@ -14,5 +14,6 @@ public class DataGenerator {
 		// headings.forEach(h -> System.out.println(h));
 		
 		ProcessInputData.buildChooseDataTypeMenu(headings);
+		ProcessInputData.updateDataTypes(headings);
 	}
 }

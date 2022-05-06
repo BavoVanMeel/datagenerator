@@ -62,6 +62,9 @@ public class Heading {
 	}
 	
 	public HeadingDataType calculateHighestHeadingDataType() {
+		if (this.highestHeadingDataType != null) {
+			return this.highestHeadingDataType;
+		}
 		HeadingDataType headingDataType = new HeadingDataType("Error");
 		Integer total = 0;
 		for (HeadingDataType hdt : headingDateType) {

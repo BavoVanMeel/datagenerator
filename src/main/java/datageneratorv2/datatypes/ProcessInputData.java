@@ -66,7 +66,7 @@ public class ProcessInputData {
 				System.out.println("Not a number");
 			}
 			if (inputInt >= 0 && inputInt < headings.size()) {
-				headings = changeDataType(headings, inputInt);
+				headings = changeDataType(scanner, headings, inputInt);
 				printDataTypeMenu(headings);
 			}
 			input = scanner.nextLine();
@@ -74,15 +74,13 @@ public class ProcessInputData {
 		scanner.close();
 	}
 	
-	public static List<Heading> changeDataType(List<Heading> headings, Integer id) {
-		Scanner scanner = new Scanner(System.in);
+	public static List<Heading> changeDataType(Scanner scanner, List<Heading> headings, Integer id) {
 		String input = scanner.nextLine();
 		String[] validInput = new String[] {"String", "Integer", "ID"};
 		if (Arrays.asList(validInput).contains(input)) {
 			HeadingDataType headingDataType = new HeadingDataType(input);
 			headings.get(id).setHighestHeadingDataType(headingDataType);
 		}
-		scanner.close();
 		return headings;
 	}
 }

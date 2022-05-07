@@ -18,6 +18,6 @@ public class DataGenerator {
 		ProcessInputData.updateDataTypes(headings);
 		
 		GenerateController generateController = new GenerateController(headings);
-		System.out.println(generateController.generateData(10));
+		System.out.println(generateController.generateData(10, 5));
 	}
 }

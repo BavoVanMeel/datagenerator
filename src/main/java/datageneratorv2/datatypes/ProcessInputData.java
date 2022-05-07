@@ -82,6 +82,7 @@ public class ProcessInputData {
 			HeadingDataType headingDataType = new HeadingDataType(input);
 			headings.get(id).setHighestHeadingDataType(headingDataType);
 		}
+		scanner.close();
 		return headings;
 	}
 }

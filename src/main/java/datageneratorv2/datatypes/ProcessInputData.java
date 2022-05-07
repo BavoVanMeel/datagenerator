@@ -77,7 +77,7 @@ public class ProcessInputData {
 	public static List<Heading> changeDataType(List<Heading> headings, Integer id) {
 		Scanner scanner = new Scanner(System.in);
 		String input = scanner.nextLine();
-		String[] validInput = new String[] {"String", "Integer"};
+		String[] validInput = new String[] {"String", "Integer", "ID"};
 		if (Arrays.asList(validInput).contains(input)) {
 			HeadingDataType headingDataType = new HeadingDataType(input);
 			headings.get(id).setHighestHeadingDataType(headingDataType);

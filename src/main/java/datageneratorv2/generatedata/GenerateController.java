@@ -18,11 +18,15 @@ public class GenerateController {
 	
 	public String generateData(Integer totalRecords) {
 		String returnValue = "";
+		GenerateID generateID = new GenerateID();
 		GenerateInteger generateInteger = new GenerateInteger(1, 5);
 		GenerateString generateString = new GenerateString(50);
 		for (int i = 0; i < totalRecords; i++) {
 			for (Heading heading : headings) {
 				switch (heading.getHighestHeadingDataType().getName()) {
+				case "ID":
+					returnValue += generateID.generateRight() + ", ";
+					break;
 				case "Integer":
 					returnValue += generateInteger.generateRight() + ", ";
 					break;

@@ -7,12 +7,12 @@ public class GenerateInteger implements GenerateData {
 	private Integer minIntegerAmount;
 	
 	public GenerateInteger() {
-		this(Integer.MAX_VALUE, Integer.MIN_VALUE);
+		this(Integer.MIN_VALUE, Integer.MAX_VALUE);
 	}
 	
-	public GenerateInteger(Integer maxIntegerAmount, Integer minIntegerAmount) {
-		this.maxIntegerAmount = maxIntegerAmount;
+	public GenerateInteger(Integer minIntegerAmount, Integer maxIntegerAmount) {
 		this.minIntegerAmount = minIntegerAmount;
+		this.maxIntegerAmount = maxIntegerAmount;
 	}
 
 	@Override
@@ -62,7 +62,7 @@ public class GenerateInteger implements GenerateData {
 		switch (option) {
 		case 0:
 			GenerateString generateString = new GenerateString(10);
-			result = generateString.generateRandomString();
+			result = generateString.generateRandomString(10);
 			break;
 		case 1:
 			result = generateDouble(1, 2);

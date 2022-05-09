@@ -6,6 +6,7 @@ import datageneratorv2.datatypes.Heading;
 import datageneratorv2.datatypes.ProcessInputData;
 import datageneratorv2.filehandling.CSVHandler;
 import datageneratorv2.generatedata.GenerateController;
+import datageneratorv2.menu.DataTypeMenu;
 
 public class DataGenerator {
 
@@ -14,8 +15,8 @@ public class DataGenerator {
 		List<Heading> headings = ProcessInputData.process(csvInput);
 		// headings.forEach(h -> System.out.println(h));
 		
-		ProcessInputData.buildChooseDataTypeMenu(headings);
-		ProcessInputData.updateDataTypes(headings);
+		DataTypeMenu.buildChooseDataTypeMenu(headings);
+		DataTypeMenu.updateDataTypes(headings);
 		
 		GenerateController generateController = new GenerateController(headings);
 		List<String[]> data = generateController.generateData(1000000, 500);

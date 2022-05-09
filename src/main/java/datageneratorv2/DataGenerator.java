@@ -18,6 +18,8 @@ public class DataGenerator {
 		ProcessInputData.updateDataTypes(headings);
 		
 		GenerateController generateController = new GenerateController(headings);
-		System.out.println(generateController.generateData(10, 5));
+		List<String[]> data = generateController.generateData(1000000, 500);
+		CSVHandler csvHandler = new CSVHandler();
+		csvHandler.writeCSV(data, ",", "src/main/resources/output.csv");
 	}
 }

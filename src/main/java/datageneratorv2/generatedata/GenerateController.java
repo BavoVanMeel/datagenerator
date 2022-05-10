@@ -1,5 +1,6 @@
 package datageneratorv2.generatedata;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +34,7 @@ public class GenerateController {
 		GenerateID generateID = new GenerateID();
 		GenerateInteger generateInteger = new GenerateInteger(1, 5);
 		GenerateString generateString = new GenerateString(50);
+		GenerateDate generateDate = new GenerateDate("yyyy-MM-dd", LocalDate.of(2000, 1, 1), LocalDate.now());
 		for (int i = 0; i < (totalRecords - totalBadRecords); i++) {
 			String[] record = new String[headings.size()];
 			for (int j = 0; j < headings.size(); j++) {
@@ -45,6 +47,9 @@ public class GenerateController {
 					break;
 				case "String":
 					record[j] = generateString.generateRight();
+					break;
+				case "Date":
+					record[j] = generateDate.generateRight();
 					break;
 				default:
 				}

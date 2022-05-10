@@ -19,7 +19,7 @@ public class DataGenerator {
 		DataTypeMenu.updateDataTypes(headings);
 		
 		GenerateController generateController = new GenerateController(headings);
-		List<String[]> data = generateController.generateData(1000000, 500);
+		List<String[]> data = generateController.generateData(100, 0);
 		CSVHandler csvHandler = new CSVHandler();
 		csvHandler.writeCSV(data, ",", "src/main/resources/output.csv");
 	}

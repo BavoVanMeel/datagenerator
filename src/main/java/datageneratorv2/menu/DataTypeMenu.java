@@ -47,7 +47,7 @@ public class DataTypeMenu {
 	
 	public static List<Heading> changeDataType(Scanner scanner, List<Heading> headings, Integer id) {
 		String input = scanner.nextLine();
-		String[] validInput = new String[] {"String", "Integer", "ID"};
+		String[] validInput = new String[] {"String", "Integer", "ID", "Date"};
 		if (Arrays.asList(validInput).contains(input)) {
 			HeadingDataType headingDataType = new HeadingDataType(input);
 			headings.get(id).setHighestHeadingDataType(headingDataType);

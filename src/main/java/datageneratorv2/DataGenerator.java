@@ -25,11 +25,11 @@ public class DataGenerator {
 		DataOptions dataOptions = dataOptionsMenu.getDataOptionsMenu();
 		
 		GenerateController generateController = new GenerateController(headings);
-		List<String[]> data = generateController.generateData(100, 0);
+		List<String[]> data = generateController.generateData(dataOptions.getAmountOfRows(), dataOptions.getAmountOfBadRows());
 		CSVHandler csvHandler = new CSVHandler();
 		csvHandler.writeCSV(data, ",", "src/main/resources/output.csv");
 		
 		ConfigurationWriter configurationWriter = new ConfigurationWriter();
-		configurationWriter.generateConfig(headings);
+		configurationWriter.generateConfig(headings, dataOptions, "configuration");
 	}
 }

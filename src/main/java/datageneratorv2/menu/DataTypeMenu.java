@@ -8,6 +8,8 @@ import datageneratorv2.datatypes.Heading;
 import datageneratorv2.datatypes.HeadingDataType;
 
 public class DataTypeMenu {
+	public static Scanner scanner = new Scanner(System.in);
+	
 	public static void buildChooseDataTypeMenu(List<Heading> headings) {
 		String explanation = "This menu generates a list of all the column names and their most likely  \n" + 
 				"of the input file. You can still change the datatype for each column by entering \n" + 
@@ -27,7 +29,6 @@ public class DataTypeMenu {
 	}
 	
 	public static void updateDataTypes(List<Heading> headings) {
-		Scanner scanner = new Scanner(System.in);
 		String input = scanner.nextLine();
 		Integer inputInt = 0;
 		while (!input.equalsIgnoreCase("x")) {
@@ -41,8 +42,7 @@ public class DataTypeMenu {
 				printDataTypeMenu(headings);
 			}
 			input = scanner.nextLine();
-		} 
-		scanner.close();
+		}
 	}
 	
 	public static List<Heading> changeDataType(Scanner scanner, List<Heading> headings, Integer id) {

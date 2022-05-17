@@ -26,8 +26,7 @@ public class DataGenerator {
 		
 		GenerateController generateController = new GenerateController(headings);
 		List<String[]> data = generateController.generateData(dataOptions.getAmountOfRows(), dataOptions.getAmountOfBadRows());
-		CSVHandler csvHandler = new CSVHandler();
-		csvHandler.writeCSV(data, ",", "src/main/resources/output.csv");
+		generateController.generateDataFile(data, "accounts_test_data");
 		
 		ConfigurationWriter configurationWriter = new ConfigurationWriter();
 		configurationWriter.generateConfig(headings, dataOptions, "configuration");

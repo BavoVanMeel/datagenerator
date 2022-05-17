@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import datageneratorv2.datatypes.Heading;
+import datageneratorv2.filehandling.CSVHandler;
 
 public class GenerateController {
 	private List<Heading> headings;
@@ -14,8 +15,12 @@ public class GenerateController {
 	}
 	
 	// Methodes should create file with data and return the path as a string value
-	public String generateDataFile() {
-		return "";
+	// Hier al dataoptions meegeven als param en dat doorsturen naat generateData
+	public String generateDataFile(List<String[]> data, String fileName) {
+		String filePath = "src/main/resources/" + fileName + ".csv";
+		CSVHandler csvHandler = new CSVHandler();
+		csvHandler.writeCSV(data, ",", filePath);
+		return filePath;
 	}
 	
 	public List<String[]> generateData(Integer totalRecords, Integer totalBadRecords) {
@@ -24,6 +29,8 @@ public class GenerateController {
 		 * NumberOutOfBoundsException("Amount of bad records should not be " +
 		 * "greater than the total amount of records."); }
 		 */
+		System.out.println("Generating data...");
+		long start = System.nanoTime();
 		List<String[]> list = new ArrayList<String[]>();
 		String[] headingList = new String[headings.size()];
 		for (int i = 0; i < headings.size(); i++) {
@@ -75,6 +82,11 @@ public class GenerateController {
 			}
 			list.add(record);
 		}
+		long stop = System.nanoTime();
+		long timeElapsed = (stop - start) / 1000000;
+		long timePerRecord = totalRecords / timeElapsed;
+		System.out.println("Generating complete: " + totalRecords + " records in " + timeElapsed + " milliseconds.");
+		System.out.println("Avarage amount of records generated per millisecond: " + timePerRecord + ".");
 		return list;
 	}
 

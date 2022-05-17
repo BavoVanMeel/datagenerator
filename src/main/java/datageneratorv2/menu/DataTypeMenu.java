@@ -38,14 +38,14 @@ public class DataTypeMenu {
 				System.out.println("Not a number");
 			}
 			if (inputInt >= 0 && inputInt < headings.size()) {
-				headings = changeDataType(scanner, headings, inputInt);
+				headings = changeDataType(headings, inputInt);
 				printDataTypeMenu(headings);
 			}
 			input = scanner.nextLine();
 		}
 	}
 	
-	public static List<Heading> changeDataType(Scanner scanner, List<Heading> headings, Integer id) {
+	public static List<Heading> changeDataType(List<Heading> headings, Integer id) {
 		String input = scanner.nextLine();
 		String[] validInput = new String[] {"String", "Integer", "ID", "Date"};
 		if (Arrays.asList(validInput).contains(input)) {

@@ -5,7 +5,10 @@ import java.util.List;
 import datageneratorv2.datatypes.Heading;
 import datageneratorv2.datatypes.ProcessInputData;
 import datageneratorv2.filehandling.CSVHandler;
+import datageneratorv2.filehandling.configuration.ConfigurationWriter;
+import datageneratorv2.filehandling.configuration.DataOptions;
 import datageneratorv2.generatedata.GenerateController;
+import datageneratorv2.menu.DataOptionsMenu;
 import datageneratorv2.menu.DataTypeMenu;
 
 public class DataGenerator {
@@ -18,9 +21,15 @@ public class DataGenerator {
 		DataTypeMenu.buildChooseDataTypeMenu(headings);
 		DataTypeMenu.updateDataTypes(headings);
 		
+		DataOptionsMenu dataOptionsMenu = new DataOptionsMenu();
+		DataOptions dataOptions = dataOptionsMenu.getDataOptionsMenu();
+		
 		GenerateController generateController = new GenerateController(headings);
 		List<String[]> data = generateController.generateData(100, 0);
 		CSVHandler csvHandler = new CSVHandler();
 		csvHandler.writeCSV(data, ",", "src/main/resources/output.csv");
+		
+		ConfigurationWriter configurationWriter = new ConfigurationWriter();
+		configurationWriter.generateConfig(headings);
 	}
 }

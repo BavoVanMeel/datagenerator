@@ -10,7 +10,10 @@ public class DataOptionsMenu {
 	public DataOptions getDataOptionsMenu() {
 		Integer amountOfRows = getInteger("Enter the amount of rows");
 		Integer amountOfBadRows = getInteger("Enter the amount of bad rows");
-		DataOptions dataOptions = new DataOptions(amountOfRows, amountOfBadRows);
+		boolean stringUseEmpty = getBoolean("Use empty strings? (Use 'true')");
+		boolean stringUseTooLong = getBoolean("Use too long strings? (Use 'true')");
+		boolean stringUseNull = getBoolean("Use null in strings? (Use 'true')");
+		DataOptions dataOptions = new DataOptions(amountOfRows, amountOfBadRows, stringUseEmpty, stringUseTooLong, stringUseNull);
 		return dataOptions;
 	}
 	
@@ -24,6 +27,15 @@ public class DataOptionsMenu {
 			System.out.println("Not a number");
 		}
 		return inputInt;
+	}
+	
+	// No exception needed because everything that is not considered "true" gives the value false.
+	private boolean getBoolean(String message) {
+		System.out.println(message);
+		String input = scanner.nextLine();
+		boolean inputBoolean = false;
+		inputBoolean = Boolean.parseBoolean(input);
+		return inputBoolean;
 	}
 
 }

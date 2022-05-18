@@ -25,8 +25,7 @@ public class DataGenerator {
 		DataOptions dataOptions = dataOptionsMenu.getDataOptionsMenu();
 		
 		GenerateController generateController = new GenerateController(headings);
-		List<String[]> data = generateController.generateData(dataOptions.getAmountOfRows(), dataOptions.getAmountOfBadRows());
-		generateController.generateDataFile(data, "accounts_test_data");
+		generateController.generateDataFile("accounts_test_data", dataOptions);
 		
 		ConfigurationWriter configurationWriter = new ConfigurationWriter();
 		configurationWriter.generateConfig(headings, dataOptions, "configuration");

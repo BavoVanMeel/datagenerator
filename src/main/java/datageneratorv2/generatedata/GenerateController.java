@@ -6,6 +6,7 @@ import java.util.List;
 
 import datageneratorv2.datatypes.Heading;
 import datageneratorv2.filehandling.CSVHandler;
+import datageneratorv2.filehandling.configuration.DataOptions;
 
 public class GenerateController {
 	private List<Heading> headings;
@@ -16,14 +17,15 @@ public class GenerateController {
 	
 	// Methodes should create file with data and return the path as a string value
 	// Hier al dataoptions meegeven als param en dat doorsturen naat generateData
-	public String generateDataFile(List<String[]> data, String fileName) {
+	public String generateDataFile(String fileName, DataOptions dataOptions) {
 		String filePath = "src/main/resources/" + fileName + ".csv";
+		List<String[]> data = generateData(dataOptions);
 		CSVHandler csvHandler = new CSVHandler();
 		csvHandler.writeCSV(data, ",", filePath);
 		return filePath;
 	}
 	
-	public List<String[]> generateData(Integer totalRecords, Integer totalBadRecords) {
+	private List<String[]> generateData(DataOptions dataOptions) {
 		/*
 		 * if (totalBadRecords > totalRecords) { throw new
 		 * NumberOutOfBoundsException("Amount of bad records should not be " +
@@ -42,7 +44,7 @@ public class GenerateController {
 		GenerateInteger generateInteger = new GenerateInteger(1, 5);
 		GenerateString generateString = new GenerateString(50);
 		GenerateDate generateDate = new GenerateDate("yyyy-MM-dd", LocalDate.of(2000, 1, 1), LocalDate.now());
-		for (int i = 0; i < (totalRecords - totalBadRecords); i++) {
+		for (int i = 0; i < (dataOptions.getAmountOfRows() - dataOptions.getAmountOfBadRows()); i++) {
 			String[] record = new String[headings.size()];
 			for (int j = 0; j < headings.size(); j++) {
 				switch (headings.get(j).getHighestHeadingDataType().getName()) {
@@ -64,7 +66,7 @@ public class GenerateController {
 			list.add(record);
 		}
 		
-		for (int i = 0; i < (totalBadRecords); i++) {
+		for (int i = 0; i < (dataOptions.getAmountOfBadRows()); i++) {
 			String[] record = new String[headings.size()];
 			for (int j = 0; j < headings.size(); j++) {
 				switch (headings.get(j).getHighestHeadingDataType().getName()) {
@@ -84,8 +86,8 @@ public class GenerateController {
 		}
 		long stop = System.nanoTime();
 		long timeElapsed = (stop - start) / 1000000;
-		long timePerRecord = totalRecords / timeElapsed;
-		System.out.println("Generating complete: " + totalRecords + " records in " + timeElapsed + " milliseconds.");
+		long timePerRecord = dataOptions.getAmountOfRows() / timeElapsed;
+		System.out.println("Generating complete: " + dataOptions.getAmountOfRows() + " records in " + timeElapsed + " milliseconds.");
 		System.out.println("Avarage amount of records generated per millisecond: " + timePerRecord + ".");
 		return list;
 	}

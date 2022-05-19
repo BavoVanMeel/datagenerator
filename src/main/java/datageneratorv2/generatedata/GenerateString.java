@@ -5,6 +5,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class GenerateString implements GenerateData {
 	private Integer maxStringLength;
 	
+	// TODO: Use StringDetails
 	public GenerateString(Integer maxStringLength) {
 		this.maxStringLength = maxStringLength;
 	}

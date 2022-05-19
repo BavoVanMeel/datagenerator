@@ -1,11 +1,14 @@
 package datageneratorv2.menu;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 import datageneratorv2.datatypes.Heading;
 import datageneratorv2.datatypes.HeadingDataType;
+import datageneratorv2.persistance.Column;
+import datageneratorv2.persistance.Table;
 
 public class DataTypeMenu {
 	public static Scanner scanner = new Scanner(System.in);
@@ -28,7 +31,7 @@ public class DataTypeMenu {
 		}
 	}
 	
-	public static void updateDataTypes(List<Heading> headings) {
+	public static Table updateDataTypes(List<Heading> headings) {
 		String input = scanner.nextLine();
 		Integer inputInt = 0;
 		while (!input.equalsIgnoreCase("x")) {
@@ -43,6 +46,9 @@ public class DataTypeMenu {
 			}
 			input = scanner.nextLine();
 		}
+		// After x is pressed, create table object
+		Table table = createBasicTable(headings);
+		return table;
 	}
 	
 	public static List<Heading> changeDataType(List<Heading> headings, Integer id) {
@@ -53,5 +59,19 @@ public class DataTypeMenu {
 			headings.get(id).setHighestHeadingDataType(headingDataType);
 		}
 		return headings;
+	}
+	
+	private static Table createBasicTable(List<Heading> headings) {
+		List<Column> columns = new ArrayList<Column>();
+		for (int i = 0; i < headings.size(); i++) {
+			Heading heading = headings.get(i);
+			
+			String columnName = heading.getHeadingName();
+			String dataTypeName = heading.getHighestHeadingDataType().getName();
+			Column column = new Column(columnName, dataTypeName);
+			columns.add(column);
+		}
+		Table table = new Table(columns);
+		return table;
 	}
 }

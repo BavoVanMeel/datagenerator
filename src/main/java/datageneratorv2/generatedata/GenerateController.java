@@ -16,7 +16,6 @@ public class GenerateController {
 	}
 	
 	// Methodes should create file with data and return the path as a string value
-	// Hier al dataoptions meegeven als param en dat doorsturen naat generateData
 	public String generateDataFile(String fileName, DataOptions dataOptions) {
 		String filePath = "src/main/resources/" + fileName + ".csv";
 		List<String[]> data = generateData(dataOptions);
@@ -40,7 +39,7 @@ public class GenerateController {
 		}
 		list.add(headingList);
 		
-		GenerateID generateID = new GenerateID();
+		GenerateID generateID = new GenerateID(1);
 		GenerateInteger generateInteger = new GenerateInteger(1, 5);
 		GenerateString generateString = new GenerateString(50);
 		GenerateDate generateDate = new GenerateDate("yyyy-MM-dd", LocalDate.of(2000, 1, 1), LocalDate.now());

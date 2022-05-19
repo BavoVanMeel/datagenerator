@@ -8,7 +8,11 @@ public class GenerateID implements GenerateData {
 	 * More threadsafe than long so better for scalling this
 	 * application up.
 	 */
-	private static AtomicLong idCounter = new AtomicLong();
+	private AtomicLong idCounter;
+
+	public GenerateID(Integer idCounter) {
+		this.idCounter = new AtomicLong(idCounter);
+	}
 
 	@Override
 	public String generateRight() {
@@ -18,7 +22,6 @@ public class GenerateID implements GenerateData {
 
 	@Override
 	public String generateWrong() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }

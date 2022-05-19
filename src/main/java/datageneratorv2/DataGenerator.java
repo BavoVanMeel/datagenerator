@@ -8,8 +8,9 @@ import datageneratorv2.filehandling.CSVHandler;
 import datageneratorv2.filehandling.configuration.ConfigurationWriter;
 import datageneratorv2.filehandling.configuration.DataOptions;
 import datageneratorv2.generatedata.GenerateController;
-import datageneratorv2.menu.DataOptionsMenu;
+import datageneratorv2.menu.DataParametersMenu;
 import datageneratorv2.menu.DataTypeMenu;
+import datageneratorv2.persistance.Table;
 
 public class DataGenerator {
 
@@ -19,9 +20,9 @@ public class DataGenerator {
 		// headings.forEach(h -> System.out.println(h));
 		
 		DataTypeMenu.buildChooseDataTypeMenu(headings);
-		DataTypeMenu.updateDataTypes(headings);
+		Table table = DataTypeMenu.updateDataTypes(headings);
 		
-		DataOptionsMenu dataOptionsMenu = new DataOptionsMenu();
+		DataParametersMenu dataOptionsMenu = new DataParametersMenu(table);
 		DataOptions dataOptions = dataOptionsMenu.getDataOptionsMenu();
 		
 		GenerateController generateController = new GenerateController(headings);

@@ -1,5 +1,4 @@
 package datageneratorv2.menu;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -8,6 +7,7 @@ import java.util.Scanner;
 import datageneratorv2.filehandling.configuration.DataOptions;
 import datageneratorv2.persistance.Column;
 import datageneratorv2.persistance.DateParameters;
+import datageneratorv2.persistance.IDParameters;
 import datageneratorv2.persistance.IntegerParameters;
 import datageneratorv2.persistance.StringParameters;
 import datageneratorv2.persistance.Table;
@@ -42,6 +42,9 @@ public class DataParametersMenu {
 				DateParameters dateParameters = createDateParameters();
 				column.setDataTypeDetail(dateParameters);
 				break;
+			case "ID":
+				IDParameters idParameters = createIDParameters();
+				column.setDataTypeDetail(idParameters);
 			}
 			boolean generateWrong = getBoolean("Should wrong data be generated for this column? (Use 'true')");
 			column.setGenerateWrong(generateWrong);
@@ -112,7 +115,16 @@ public class DataParametersMenu {
 		boolean dateUseWrongFormat = getBoolean("Use wrong date format? (Use 'true')");
 		boolean dateUseTooEarly = getBoolean("Use out too early? (Use 'true')");
 		boolean dateUseTooLate = getBoolean("Use out too late? (Use 'true')");
-		return null;
+		DateParameters dateParams = new DateParameters(dateFormat, minDate, maxDate, dateUseWrongFormat, dateUseTooEarly, dateUseTooLate);
+		return dateParams;
+	}
+	
+	private IDParameters createIDParameters() {
+		Integer idStartingPoint = getInteger("Enter the starting point of the ID.");
+		boolean idUseDuplicates = getBoolean("Use duplicate ID's? (Use 'true')");
+		boolean idUseBelowStartingPoint = getBoolean("Use ID's below starting point? (Use 'true')");
+		IDParameters idParams = new IDParameters(idStartingPoint, idUseDuplicates, idUseBelowStartingPoint);
+		return idParams;
 	}
 
 }

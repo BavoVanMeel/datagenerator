@@ -11,6 +11,7 @@ import datageneratorv2.datatypes.Heading;
 
 public class ConfigurationWriter {
 	
+	// TODO: use Table object as input
 	public void generateConfig(List<Heading> headings, DataOptions dataOptions, String fileName) {
 		JSONObject configuration = new JSONObject();
         try {

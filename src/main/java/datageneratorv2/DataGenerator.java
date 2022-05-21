@@ -5,8 +5,6 @@ import java.util.List;
 import datageneratorv2.datatypes.Heading;
 import datageneratorv2.datatypes.ProcessInputData;
 import datageneratorv2.filehandling.CSVHandler;
-import datageneratorv2.filehandling.configuration.ConfigurationWriter;
-import datageneratorv2.filehandling.configuration.DataOptions;
 import datageneratorv2.generatedata.GenerateController;
 import datageneratorv2.menu.DataParametersMenu;
 import datageneratorv2.menu.DataTypeMenu;
@@ -23,12 +21,12 @@ public class DataGenerator {
 		Table table = DataTypeMenu.updateDataTypes(headings);
 		
 		DataParametersMenu dataOptionsMenu = new DataParametersMenu(table);
-		DataOptions dataOptions = dataOptionsMenu.getDataOptionsMenu();
+		table = dataOptionsMenu.getDataOptionsMenu();
 		
 		GenerateController generateController = new GenerateController(headings);
-		generateController.generateDataFile("accounts_test_data", dataOptions);
+		generateController.generateDataFile("accounts_test_data", table);
 		
-		ConfigurationWriter configurationWriter = new ConfigurationWriter();
-		configurationWriter.generateConfig(headings, dataOptions, "configuration");
+//		ConfigurationWriter configurationWriter = new ConfigurationWriter();
+//		configurationWriter.generateConfig(headings, "configuration");
 	}
 }

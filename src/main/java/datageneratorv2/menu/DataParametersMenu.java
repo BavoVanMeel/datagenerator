@@ -4,7 +4,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
 
-import datageneratorv2.filehandling.configuration.DataOptions;
 import datageneratorv2.persistance.Column;
 import datageneratorv2.persistance.DateParameters;
 import datageneratorv2.persistance.IDParameters;
@@ -20,7 +19,7 @@ public class DataParametersMenu {
 		this.table = table;
 	}
 
-	public DataOptions getDataOptionsMenu() {
+	public Table getDataOptionsMenu() {
 		Integer amountOfRows = getInteger("Enter the amount of rows");
 		Integer amountOfBadRows = getInteger("Enter the amount of bad rows");
 		table.setAmountOfRows(amountOfRows);
@@ -29,6 +28,7 @@ public class DataParametersMenu {
 		List<Column> columns = table.getColumns();
 		for (int i = 0; i < columns.size(); i++) {
 			Column column = table.getColumns().get(i);
+			System.out.println("--- " + column.getColumnName() + " --- " + column.getDataTypeName() + " ---");
 			switch (column.getDataTypeName()) {
 			case "String":
 				StringParameters stringParams = createStringParameters();
@@ -51,7 +51,7 @@ public class DataParametersMenu {
 		}
 		
 		// DataOptions dataOptions = new DataOptions(amountOfRows, amountOfBadRows, null, stringUseEmpty, stringUseTooLong, stringUseNull);
-		return null;
+		return table;
 	}
 	
 	private Integer getInteger(String message) {

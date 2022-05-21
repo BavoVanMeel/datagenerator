@@ -1,6 +1,6 @@
 package datageneratorv2.generatedata;
 
-import java.util.concurrent.atomic.AtomicLong;
+import datageneratorv2.persistance.IDParameters;
 
 public class GenerateID implements GenerateData {
 	/*
@@ -8,15 +8,15 @@ public class GenerateID implements GenerateData {
 	 * More threadsafe than long so better for scalling this
 	 * application up.
 	 */
-	private AtomicLong idCounter;
+	private IDParameters idParams;
 
-	public GenerateID(Integer idCounter) {
-		this.idCounter = new AtomicLong(idCounter);
+	public GenerateID(IDParameters idParams) {
+		this.idParams = idParams;
 	}
 
 	@Override
 	public String generateRight() {
-		String s = String.valueOf(idCounter.getAndIncrement());
+		String s = String.valueOf(idParams.getAndIncrementCounter());
 		return s;
 	}
 

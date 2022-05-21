@@ -2,17 +2,18 @@ package datageneratorv2.generatedata;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+import datageneratorv2.persistance.StringParameters;
+
 public class GenerateString implements GenerateData {
-	private Integer maxStringLength;
+	private StringParameters stringParams;
 	
-	// TODO: Use StringDetails
-	public GenerateString(Integer maxStringLength) {
-		this.maxStringLength = maxStringLength;
+	public GenerateString(StringParameters stringParams) {
+		this.stringParams = stringParams;
 	}
 	
 	@Override
 	public String generateRight() {
-		return generateRandomString(maxStringLength);
+		return generateRandomString(stringParams.getMaxStringLength());
 	}
 
 	// TODO: use strange characters
@@ -28,7 +29,7 @@ public class GenerateString implements GenerateData {
 			break;
 		case 1:
 			// Too long
-			returnValue = generateRandomString(maxStringLength + 100);
+			returnValue = generateRandomString(stringParams.getMaxStringLength() + 100);
 			break;
 		case 2:
 			// Null
@@ -47,8 +48,8 @@ public class GenerateString implements GenerateData {
 	
 	public String generateRandomString(char[] charset, Integer length) {
 		StringBuilder stringBuilder = new StringBuilder(length);
-		for (int i = 0; i < maxStringLength; i++) {
-			Integer letterNumber = ThreadLocalRandom.current().nextInt(0, maxStringLength);
+		for (int i = 0; i < stringParams.getMaxStringLength(); i++) {
+			Integer letterNumber = ThreadLocalRandom.current().nextInt(0, stringParams.getMaxStringLength());
 			char letter = charset[letterNumber];
 			stringBuilder.append(letter);
 		}

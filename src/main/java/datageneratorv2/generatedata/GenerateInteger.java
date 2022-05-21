@@ -2,17 +2,14 @@ package datageneratorv2.generatedata;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+import datageneratorv2.persistance.IntegerParameters;
+import datageneratorv2.persistance.StringParameters;
+
 public class GenerateInteger implements GenerateData {
-	private Integer maxIntegerAmount;
-	private Integer minIntegerAmount;
+	private IntegerParameters integerParams;
 	
-	public GenerateInteger() {
-		this(Integer.MIN_VALUE, Integer.MAX_VALUE);
-	}
-	
-	public GenerateInteger(Integer minIntegerAmount, Integer maxIntegerAmount) {
-		this.minIntegerAmount = minIntegerAmount;
-		this.maxIntegerAmount = maxIntegerAmount;
+	public GenerateInteger(IntegerParameters integerParams) {
+		this.integerParams = integerParams;
 	}
 
 	@Override
@@ -41,17 +38,17 @@ public class GenerateInteger implements GenerateData {
 
 	@Override
 	public String generateRight() {
-		Integer randomValue = ThreadLocalRandom.current().nextInt(minIntegerAmount, maxIntegerAmount);
+		Integer randomValue = ThreadLocalRandom.current().nextInt(integerParams.getMinIntegerAmount(), integerParams.getMaxIntegerAmount());
 		return randomValue.toString();
 	}
 	
 	public String generateOutOfBounds() {
 		Integer negativeOrPositive = ThreadLocalRandom.current().nextInt(0, 2);
 		if (negativeOrPositive == 0) {
-			Long randomLong = ThreadLocalRandom.current().nextLong(Long.MIN_VALUE, minIntegerAmount);
+			Long randomLong = ThreadLocalRandom.current().nextLong(Long.MIN_VALUE, integerParams.getMinIntegerAmount());
 			return randomLong.toString();
 		}
-		Long randomLong = ThreadLocalRandom.current().nextLong(maxIntegerAmount, Long.MAX_VALUE);
+		Long randomLong = ThreadLocalRandom.current().nextLong(integerParams.getMaxIntegerAmount(), Long.MAX_VALUE);
 		return randomLong.toString();
 	}
 	
@@ -61,7 +58,7 @@ public class GenerateInteger implements GenerateData {
 		Integer option = ThreadLocalRandom.current().nextInt(0, amountOfOptions);
 		switch (option) {
 		case 0:
-			GenerateString generateString = new GenerateString(10);
+			GenerateString generateString = new GenerateString(new StringParameters(10, false, false, false));
 			result = generateString.generateRandomString(10);
 			break;
 		case 1:

@@ -30,7 +30,7 @@ public class GenerateDate implements GenerateData {
 	}
 
 	@Override
-	public String generateWrong() {
+	public WrongResult generateWrong() {
 		// TODO Auto-generated method stub
 		return null;
 	}

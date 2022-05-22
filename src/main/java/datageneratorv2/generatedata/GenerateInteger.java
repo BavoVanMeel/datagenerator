@@ -13,27 +13,27 @@ public class GenerateInteger implements GenerateData {
 	}
 
 	@Override
-	public String generateWrong() {
-		String returnValue = "";
+	public WrongResult generateWrong() {
+		WrongResult wrongResult = null;
 		Integer amountOfOptions = 3;
 		Integer option = ThreadLocalRandom.current().nextInt(0, amountOfOptions);
 		switch (option) {
 		case 0:
 			// Integer out of bounds
-			returnValue = generateOutOfBounds();
+			String value = generateOutOfBounds();
+			wrongResult = new WrongResult(value, "out of bounds");
 			break;
 		case 1:
 			// Wrong data type
-			returnValue = generateWrongDataType();
+			String valueDateType = generateWrongDataType();
+			wrongResult = new WrongResult(valueDateType, "wrong data type");
 			break;
 		case 2:
 			// NULL 
-			returnValue = null;
-			break;
-		default:
+			wrongResult = new WrongResult(null, "null");
 			break;
 		}
-		return returnValue;
+		return wrongResult;
 	}
 
 	@Override

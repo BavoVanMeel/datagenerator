@@ -18,27 +18,26 @@ public class GenerateString implements GenerateData {
 
 	// TODO: use strange characters
 	@Override
-	public String generateWrong() {
-		String returnValue = "";
+	public WrongResult generateWrong() {
+		WrongResult wrongResult = null;
 		Integer amountOfOptions = 3;
 		Integer option = ThreadLocalRandom.current().nextInt(0, amountOfOptions);
 		switch (option) {
 		case 0:
 			// Empty
-			returnValue = "";
+			wrongResult = new WrongResult("", "empty");
 			break;
 		case 1:
 			// Too long
-			returnValue = generateRandomString(stringParams.getMaxStringLength() + 100);
+			String value = generateRandomString(stringParams.getMaxStringLength() + 100);
+			wrongResult = new WrongResult(value, "too long");
 			break;
 		case 2:
 			// Null
-			returnValue = null;
-			break;
-		default:
+			wrongResult = new WrongResult(null, "null");
 			break;
 		}
-		return returnValue;
+		return wrongResult;
 	}
 	
 	public String generateRandomString(Integer length) {

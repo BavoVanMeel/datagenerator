@@ -21,7 +21,7 @@ public class GenerateID implements GenerateData {
 	}
 
 	@Override
-	public String generateWrong() {
-		return null;
+	public WrongResult generateWrong() {
+		return new WrongResult("", "empty");
 	}
 }

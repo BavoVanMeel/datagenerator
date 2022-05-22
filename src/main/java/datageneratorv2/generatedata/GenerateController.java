@@ -19,15 +19,17 @@ public class GenerateController {
 	}
 	
 	// Methodes should create file with data and return the path as a string value
-	public String generateDataFile(String fileName, Table table) {
-		String filePath = "src/main/resources/" + fileName + ".csv";
-		List<String[]> data = generateData(table);
+	public String generateDataFile(String fileNameTest, String fileNameValidation, Table table) {
+		String filePathTest = "src/main/resources/" + fileNameTest + ".csv";
+		String filePathValidation = "src/main/resources/" + fileNameValidation + ".csv";
+		GenerateResult generateResult = generateData(table);
 		CSVHandler csvHandler = new CSVHandler();
-		csvHandler.writeCSV(data, ",", filePath);
-		return filePath;
+		csvHandler.writeCSV(generateResult.getTestData(), ",", filePathTest);
+		csvHandler.writeCSV(generateResult.getValidationData(), ",", filePathValidation);
+		return filePathTest;
 	}
 	
-	private List<String[]> generateData(Table table) {
+	private GenerateResult generateData(Table table) {
 		/*
 		 * if (totalBadRecords > totalRecords) { throw new
 		 * NumberOutOfBoundsException("Amount of bad records should not be " +
@@ -35,17 +37,21 @@ public class GenerateController {
 		 */
 		System.out.println("Generating data...");
 		long start = System.nanoTime();
-		List<String[]> list = new ArrayList<String[]>();
+		List<String[]> testData = new ArrayList<String[]>();
+		List<String[]> validationData = new ArrayList<String[]>();
 		String[] headingList = new String[headings.size()];
 		for (int i = 0; i < headings.size(); i++) {
 			headingList[i] = headings.get(i).getHeadingName();
 		}
-		list.add(headingList);
+		testData.add(headingList);
+		validationData.add(headingList);
 		
 		List<Column> columns = table.getColumns();
 		Integer totalRows = table.getAmountOfRows();
+		Integer totalBadRows = table.getAmountOfBadRows();
 		Integer totalColumns = columns.size();
 		String[][] result = new String[totalRows][totalColumns];
+		String[][] badResults = new String[totalRows][totalColumns];
 		for (int i = 0; i < totalColumns; i++) {
 			Column column = columns.get(i);
 			switch (column.getDataTypeName()) {
@@ -53,31 +59,58 @@ public class GenerateController {
 				IDParameters idParams = (IDParameters) column.getDataTypeDetail();
 				GenerateID generateID = new GenerateID(idParams);
 				for (int j = 0; j < totalRows; j++) {
-					result[j][i] = generateID.generateRight();
+					if (j < totalRows - totalBadRows) {
+						result[j][i] = generateID.generateRight();
+						badResults[j][i] = "+";
+					} else {
+						WrongResult wrongResult = generateID.generateWrong();
+						result[j][i] = wrongResult.getValue();
+						badResults[j][i] = wrongResult.getReason();
+					}
 				}
 				break;
 			case "String":
 				StringParameters stringParams = (StringParameters) column.getDataTypeDetail();
 				GenerateString generateString = new GenerateString(stringParams);
 				for (int j = 0; j < totalRows; j++) {
-					result[j][i] = generateString.generateRight();
+					if (j < totalRows - totalBadRows) {
+						result[j][i] = generateString.generateRight();
+						badResults[j][i] = "+";
+					} else {
+						WrongResult wrongResult = generateString.generateWrong();
+						result[j][i] = wrongResult.getValue();
+						badResults[j][i] = wrongResult.getReason();
+					}
 				}
 				break;
 			case "Integer":
 				IntegerParameters integerParams = (IntegerParameters) column.getDataTypeDetail();
 				GenerateInteger generateInteger = new GenerateInteger(integerParams);
 				for (int j = 0; j < totalRows; j++) {
-					result[j][i] = generateInteger.generateRight();
+					if (j < totalRows - totalBadRows) {
+						result[j][i] = generateInteger.generateRight();
+						badResults[j][i] = "+";
+					} else {
+						WrongResult wrongResult = generateInteger.generateWrong();
+						result[j][i] = wrongResult.getValue();
+						badResults[j][i] = wrongResult.getReason();
+					}
 				}
 				break;
 			}
 		}
 		
-		// Last part of 2d array to list
+		// Convert last part of 2d array to list
 		for (int i = 0; i < totalRows; i++) {
-			String[] row = result[i];
-			list.add(row);
+			// Testdata
+			String[] rowTest = result[i];
+			testData.add(rowTest);
+			
+			// Validation data
+			String[] rowValidation = badResults[i];
+			validationData.add(rowValidation);
 		}
+		GenerateResult generateResult = new GenerateResult(testData, validationData);
 //		GenerateID generateID = new GenerateID(1);
 //		GenerateInteger generateInteger = new GenerateInteger(1, 5);
 //		GenerateString generateString = new GenerateString(50);
@@ -127,7 +160,7 @@ public class GenerateController {
 		long timePerRecord = totalRows / timeElapsed;
 		System.out.println("Generating complete: " + totalRows + " records in " + timeElapsed + " milliseconds.");
 		System.out.println("Avarage amount of records generated per millisecond: " + timePerRecord + ".");
-		return list;
+		return generateResult;
 	}
 
 }

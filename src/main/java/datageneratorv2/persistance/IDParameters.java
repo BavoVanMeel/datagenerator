@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 public class IDParameters extends DataTypeParameters {
 	private AtomicLong idCounter;
 	private String dataTypeName;
+	private Integer idStartingPoint;
 	private boolean idUseDuplicates;
 	private boolean idUseBelowStartingPoint;
 	
@@ -25,6 +26,14 @@ public class IDParameters extends DataTypeParameters {
 
 	public void setDataTypeName(String dataTypeName) {
 		this.dataTypeName = dataTypeName;
+	}
+	
+	public Integer getIdStartingPoint() {
+		return idStartingPoint;
+	}
+
+	public void setIdStartingPoint(Integer idStartingPoint) {
+		this.idStartingPoint = idStartingPoint;
 	}
 
 	public boolean isIdUseDuplicates() {
@@ -48,12 +57,16 @@ public class IDParameters extends DataTypeParameters {
 
 	public IDParameters(Integer idStartingPoint, String dataTypeName, boolean idUseDuplicates, boolean idUseBelowStartingPoint) {
 		this.idCounter = new AtomicLong(idStartingPoint);
+		this.idStartingPoint = idStartingPoint;
 		this.dataTypeName = dataTypeName;
 		this.idUseDuplicates = idUseDuplicates;
 		this.idUseBelowStartingPoint = idUseBelowStartingPoint;
 	}
 	
 	public String getAndIncrementCounter() {
+		if (idCounter == null) {
+			this.idCounter = new AtomicLong(idStartingPoint);
+		}
 		String result = String.valueOf(idCounter.getAndIncrement());
 		return result;
 	}

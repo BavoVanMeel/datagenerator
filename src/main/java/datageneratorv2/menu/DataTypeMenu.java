@@ -13,7 +13,7 @@ import datageneratorv2.persistance.ConfigurationJson;
 public class DataTypeMenu {
 	public static Scanner scanner = new Scanner(System.in);
 	
-	public static void buildChooseDataTypeMenu(List<Heading> headings) {
+	public void buildChooseDataTypeMenu(List<Heading> headings) {
 		String explanation = "This menu generates a list of all the column names and their most likely datatypes \n" + 
 				"of the input file. You can still change the datatype for each column by entering \n" + 
 				"the column ID. Press enter. You will then be asked to type the correct datatype \n" + 
@@ -24,14 +24,14 @@ public class DataTypeMenu {
 		printDataTypeMenu(headings);
 	}
 	
-	public static void printDataTypeMenu(List<Heading> headings) {
+	public void printDataTypeMenu(List<Heading> headings) {
 		System.out.format("%5s%20s%20s", "ID", "COLUMN NAME", "DATATYPE \n");
 		for (int i = 0; i < headings.size(); i++) {
 			System.out.format("%5d%20s%20s", i, headings.get(i).getHeadingName(), headings.get(i).getHighestHeadingDataType().getName() + "\n");
 		}
 	}
 	
-	public static ConfigurationJson updateDataTypes(List<Heading> headings) {
+	public ConfigurationJson updateDataTypes(List<Heading> headings) {
 		String input = scanner.nextLine();
 		Integer inputInt = 0;
 		while (!input.equalsIgnoreCase("x")) {
@@ -51,7 +51,7 @@ public class DataTypeMenu {
 		return config;
 	}
 	
-	public static List<Heading> changeDataType(List<Heading> headings, Integer id) {
+	public List<Heading> changeDataType(List<Heading> headings, Integer id) {
 		String input = scanner.nextLine();
 		String[] validInput = new String[] {"String", "Integer", "ID", "Date"};
 		if (Arrays.asList(validInput).contains(input)) {
@@ -61,7 +61,7 @@ public class DataTypeMenu {
 		return headings;
 	}
 	
-	private static ConfigurationJson createBasicTable(List<Heading> headings) {
+	private ConfigurationJson createBasicTable(List<Heading> headings) {
 		List<Column> columns = new ColumnList();
 		for (int i = 0; i < headings.size(); i++) {
 			Heading heading = headings.get(i);

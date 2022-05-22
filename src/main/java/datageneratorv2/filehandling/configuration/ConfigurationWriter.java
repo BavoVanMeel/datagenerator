@@ -9,27 +9,23 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import datageneratorv2.persistance.Column;
+import datageneratorv2.persistance.ConfigurationJson;
 import datageneratorv2.persistance.IDParameters;
 import datageneratorv2.persistance.IntegerParameters;
 import datageneratorv2.persistance.StringParameters;
-import datageneratorv2.persistance.Table;
 
 public class ConfigurationWriter {
 	
-	public void generateConfig(Table table, String fileName) {
-		JSONObject configuration = new JSONObject();
-        try {
-			configuration.put("name", "Configuration");
-			
-			// Table
-			JSONObject tableConfig = new JSONObject();
-			tableConfig.put("amount_of_rows", table.getAmountOfRows());
-			tableConfig.put("amount_of_bad_rows", table.getAmountOfBadRows());
+	public void generateConfig(ConfigurationJson config, String fileName) {
+		JSONObject tableConfig = new JSONObject();
+        try {			
+			tableConfig.put("amount_of_rows", config.getAmountOfRows());
+			tableConfig.put("amount_of_bad_rows", config.getAmountOfBadRows());
 			
 			// Column
 			List<JSONObject> columnList = new ArrayList<JSONObject>();
-			List<Column> columns = table.getColumns();
-			for (int i = 0; i < table.getColumns().size(); i++) {
+			List<Column> columns = config.getColumns();
+			for (int i = 0; i < config.getColumns().size(); i++) {
 				Column column = columns.get(i);
 				JSONObject columnConfig = new JSONObject();
 				columnConfig.put("columnName", column.getColumnName());
@@ -39,11 +35,13 @@ public class ConfigurationWriter {
 				switch (column.getDataTypeName()) {
 				case "ID":
 					IDParameters idParams = (IDParameters) column.getDataTypeParameters();
+					params.put("dataTypeName", idParams.getDataTypeName());
 					params.put("idUseDuplicates", idParams.isIdUseDuplicates());
 					params.put("idUseBelowStartingPoint", idParams.isIdUseBelowStartingPoint());
 					break;
 				case "Integer":
 					IntegerParameters integerParams = (IntegerParameters) column.getDataTypeParameters();
+					params.put("dataTypeName", integerParams.getDataTypeName());
 					params.put("minIntegerAmount", integerParams.getMinIntegerAmount());
 					params.put("maxIntegerAmount", integerParams.getMaxIntegerAmount());
 					params.put("integerUseOutOfBounds", integerParams.isIntegerUseOutOfBounds());
@@ -52,6 +50,7 @@ public class ConfigurationWriter {
 					break;
 				case "String":
 					StringParameters stringParams = (StringParameters) column.getDataTypeParameters();
+					params.put("dataTypeName", stringParams.getDataTypeName());
 					params.put("maxStringLength", stringParams.getMaxStringLength());
 					params.put("stringUseEmpty", stringParams.isStringUseEmpty());
 					params.put("stringUseTooLong", stringParams.isStringUseTooLong());
@@ -64,11 +63,10 @@ public class ConfigurationWriter {
 				columnList.add(columnConfig);
 			}
 			tableConfig.put("columns", columnList);
-			configuration.put("table", tableConfig);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-        writeConfiguration(configuration, fileName);
+        writeConfiguration(tableConfig, fileName);
 	}
 	
 	private void writeConfiguration(JSONObject jsonObject, String fileName) {

@@ -3,7 +3,6 @@ package datageneratorv2.generatedata;
 import java.util.ArrayList;
 import java.util.List;
 
-import datageneratorv2.datatypes.Heading;
 import datageneratorv2.filehandling.CSVHandler;
 import datageneratorv2.persistance.Column;
 import datageneratorv2.persistance.ConfigurationJson;
@@ -12,10 +11,8 @@ import datageneratorv2.persistance.IntegerParameters;
 import datageneratorv2.persistance.StringParameters;
 
 public class GenerateController {
-	private List<Heading> headings;
 	
-	public GenerateController(List<Heading> headings) {
-		this.headings = headings;
+	public GenerateController() {
 	}
 	
 	// Methodes should create file with data and return the path as a string value
@@ -39,14 +36,15 @@ public class GenerateController {
 		long start = System.nanoTime();
 		List<String[]> testData = new ArrayList<String[]>();
 		List<String[]> validationData = new ArrayList<String[]>();
-		String[] headingList = new String[headings.size()];
-		for (int i = 0; i < headings.size(); i++) {
-			headingList[i] = headings.get(i).getHeadingName();
+		List<Column> columns = config.getColumns();
+		
+		String[] headingList = new String[columns.size()];
+		for (int i = 0; i < columns.size(); i++) {
+			headingList[i] = columns.get(i).getColumnName();
 		}
 		testData.add(headingList);
 		validationData.add(headingList);
 		
-		List<Column> columns = config.getColumns();
 		Integer totalRows = config.getAmountOfRows();
 		Integer totalBadRows = config.getAmountOfBadRows();
 		Integer totalColumns = columns.size();
@@ -60,12 +58,17 @@ public class GenerateController {
 				GenerateID generateID = new GenerateID(idParams);
 				for (int j = 0; j < totalRows; j++) {
 					if (j < totalRows - totalBadRows) {
-						result[j][i] = generateID.generateRight();
-						badResults[j][i] = "+";
+						String id = generateID.generateRight();
+						result[j][i] = id;
+						badResults[j][i] = id;
 					} else {
-						WrongResult wrongResult = generateID.generateWrong();
-						result[j][i] = wrongResult.getValue();
-						badResults[j][i] = wrongResult.getReason();
+						String id = generateID.generateRight();
+						result[j][i] = id;
+						badResults[j][i] = id;
+						// NULL values for ID generates problems regarding usability
+//						WrongResult wrongResult = generateID.generateWrong();
+//						result[j][i] = wrongResult.getValue();
+//						badResults[j][i] = wrongResult.getReason();
 					}
 				}
 				break;

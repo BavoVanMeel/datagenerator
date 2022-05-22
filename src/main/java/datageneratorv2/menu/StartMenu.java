@@ -1,7 +1,11 @@
 package datageneratorv2.menu;
 
+import java.util.List;
 import java.util.Scanner;
 
+import datageneratorv2.datatypes.Heading;
+import datageneratorv2.datatypes.ProcessInputData;
+import datageneratorv2.filehandling.CSVHandler;
 import datageneratorv2.filehandling.configuration.ConfigurationReader;
 import datageneratorv2.persistance.Column;
 import datageneratorv2.persistance.ConfigurationJson;
@@ -9,7 +13,7 @@ import datageneratorv2.persistance.ConfigurationJson;
 public class StartMenu {
 	public static Scanner scanner = new Scanner(System.in);
 	
-	public void showStartMenu() {
+	public ConfigurationJson showStartMenu() {
 		String explanation = "\t ---------------------- \n" + "\t --- DATA GENERATOR ---  \n" + 
 				"\t ---------------------- \n" + "\n" +
 				"Welcome to data generator. To start, enter the number of one of the following options: \n" + 
@@ -17,9 +21,20 @@ public class StartMenu {
 				"\t 2. Load configuration";
 		System.out.println(explanation);
 		Integer option = readInteger();
-		if (option == 2) {
-			ConfigurationJson config = loadConfiguration();
+		ConfigurationJson config = null;
+		if (option == 1) {
+			List<String[]> csvInput = CSVHandler.readCSV("src/main/resources/accounts_to_migrate.csv");
+			List<Heading> headings = ProcessInputData.process(csvInput);
+			DataTypeMenu dataTypeMenu = new DataTypeMenu();
+			dataTypeMenu.buildChooseDataTypeMenu(headings);
+			config = dataTypeMenu.updateDataTypes(headings);
+			DataParametersMenu dataOptionsMenu = new DataParametersMenu(config);
+			config = dataOptionsMenu.getDataOptionsMenu();
 		}
+		if (option == 2) {
+			config = loadConfiguration();
+		}
+		return config;
 	}
 	
 	private Integer readInteger() {
@@ -38,9 +53,6 @@ public class StartMenu {
 		String filePath = scanner.nextLine();
 		ConfigurationReader reader = new ConfigurationReader();
 		ConfigurationJson config = reader.mapTable(filePath);
-		for (Column column : config.getColumns()) {
-			System.out.println(column.getDataTypeParameters().getClass().getSimpleName());
-		}
 		return config;
 	}
 }

@@ -25,7 +25,6 @@ public class DataParametersMenu {
 		config.setAmountOfRows(amountOfRows);
 		config.setAmountOfBadRows(amountOfBadRows);
 		
-		System.out.println("test: " + config.getAmountOfBadRows());
 		List<Column> columns = config.getColumns();
 		for (int i = 0; i < columns.size(); i++) {
 			Column column = config.getColumns().get(i);

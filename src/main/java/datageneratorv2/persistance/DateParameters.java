@@ -2,6 +2,9 @@ package datageneratorv2.persistance;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
+@JsonTypeName(value = "Date")
 public class DateParameters extends DataTypeParameters {
 	private String dateFormat;
 	private LocalDate minDate;
@@ -56,6 +59,9 @@ public class DateParameters extends DataTypeParameters {
 
 	public void setDateUseTooLate(boolean dateUseTooLate) {
 		this.dateUseTooLate = dateUseTooLate;
+	}
+	
+	public DateParameters() {
 	}
 
 	public DateParameters(String dateFormat, LocalDate minDate, LocalDate maxDate, boolean dateUseWrongFormat,

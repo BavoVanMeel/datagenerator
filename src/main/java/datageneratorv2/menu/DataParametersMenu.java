@@ -5,53 +5,54 @@ import java.util.List;
 import java.util.Scanner;
 
 import datageneratorv2.persistance.Column;
+import datageneratorv2.persistance.ConfigurationJson;
 import datageneratorv2.persistance.DateParameters;
 import datageneratorv2.persistance.IDParameters;
 import datageneratorv2.persistance.IntegerParameters;
 import datageneratorv2.persistance.StringParameters;
-import datageneratorv2.persistance.Table;
 
 public class DataParametersMenu {
-	private Table table;
+	private ConfigurationJson config;
 	public static Scanner scanner = new Scanner(System.in);
 	
-	public DataParametersMenu(Table table) {
-		this.table = table;
+	public DataParametersMenu(ConfigurationJson config) {
+		this.config = config;
 	}
 
-	public Table getDataOptionsMenu() {
+	public ConfigurationJson getDataOptionsMenu() {
 		Integer amountOfRows = getInteger("Enter the amount of rows");
 		Integer amountOfBadRows = getInteger("Enter the amount of bad rows");
-		table.setAmountOfRows(amountOfRows);
-		table.setAmountOfBadRows(amountOfBadRows);
+		config.setAmountOfRows(amountOfRows);
+		config.setAmountOfBadRows(amountOfBadRows);
 		
-		List<Column> columns = table.getColumns();
+		System.out.println("test: " + config.getAmountOfBadRows());
+		List<Column> columns = config.getColumns();
 		for (int i = 0; i < columns.size(); i++) {
-			Column column = table.getColumns().get(i);
+			Column column = config.getColumns().get(i);
 			System.out.println("--- " + column.getColumnName() + " --- " + column.getDataTypeName() + " ---");
 			switch (column.getDataTypeName()) {
 			case "String":
 				StringParameters stringParams = createStringParameters();
-				column.setDataTypeDetail(stringParams);
+				column.setDataTypeParameters(stringParams);
 				break;
 			case "Integer":
 				IntegerParameters integerParams = createIntegerParameters();
-				column.setDataTypeDetail(integerParams);
+				column.setDataTypeParameters(integerParams);
 				break;
 			case "Date":
 				DateParameters dateParameters = createDateParameters();
-				column.setDataTypeDetail(dateParameters);
+				column.setDataTypeParameters(dateParameters);
 				break;
 			case "ID":
 				IDParameters idParameters = createIDParameters();
-				column.setDataTypeDetail(idParameters);
+				column.setDataTypeParameters(idParameters);
 			}
 			boolean generateWrong = getBoolean("Should wrong data be generated for this column? (Use 'true')");
 			column.setGenerateWrong(generateWrong);
 		}
 		
 		// DataOptions dataOptions = new DataOptions(amountOfRows, amountOfBadRows, null, stringUseEmpty, stringUseTooLong, stringUseNull);
-		return table;
+		return config;
 	}
 	
 	private Integer getInteger(String message) {
@@ -93,7 +94,7 @@ public class DataParametersMenu {
 		boolean stringUseEmpty = getBoolean("Use empty strings? (Use 'true')");
 		boolean stringUseTooLong = getBoolean("Use too long strings? (Use 'true')");
 		boolean stringUseNull = getBoolean("Use null? (Use 'true')");
-		StringParameters stringParams = new StringParameters(maxStringLength, stringUseEmpty, stringUseTooLong, stringUseNull);
+		StringParameters stringParams = new StringParameters("String", maxStringLength, stringUseEmpty, stringUseTooLong, stringUseNull);
 		return stringParams;
 	}
 	
@@ -103,7 +104,7 @@ public class DataParametersMenu {
 		boolean integerUseOutOfBounds = getBoolean("Use out of bounds? (Use 'true')");
 		boolean integerUseWrongDataType = getBoolean("Use wrong data type? (Use 'true')");
 		boolean integerUseNull = getBoolean("Use null? (Use 'true')");
-		IntegerParameters integerParams = new IntegerParameters(minIntegerAmount, maxIntegerAmount, integerUseOutOfBounds, 
+		IntegerParameters integerParams = new IntegerParameters("Integer", minIntegerAmount, maxIntegerAmount, integerUseOutOfBounds, 
 				integerUseWrongDataType, integerUseNull);
 		return integerParams;
 	}
@@ -123,7 +124,7 @@ public class DataParametersMenu {
 		Integer idStartingPoint = getInteger("Enter the starting point of the ID.");
 		boolean idUseDuplicates = getBoolean("Use duplicate ID's? (Use 'true')");
 		boolean idUseBelowStartingPoint = getBoolean("Use ID's below starting point? (Use 'true')");
-		IDParameters idParams = new IDParameters(idStartingPoint, idUseDuplicates, idUseBelowStartingPoint);
+		IDParameters idParams = new IDParameters(idStartingPoint, "ID", idUseDuplicates, idUseBelowStartingPoint);
 		return idParams;
 	}
 

@@ -1,5 +1,8 @@
 package datageneratorv2.persistance;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
+@JsonTypeName
 public class Column {
 	private String columnName;
 	private String dataTypeName;
@@ -30,14 +33,17 @@ public class Column {
 		this.generateWrong = generateWrong;
 	}
 
-	public DataTypeParameters getDataTypeDetail() {
+	public DataTypeParameters getDataTypeParameters() {
 		return dataTypeParameters;
 	}
 
-	public void setDataTypeDetail(DataTypeParameters dataTypeParameters) {
+	public void setDataTypeParameters(DataTypeParameters dataTypeParameters) {
 		this.dataTypeParameters = dataTypeParameters;
 	}
 	
+	public Column() {
+	}
+
 	public Column(String columnName, String dataTypeName) {
 		this(columnName, dataTypeName, false, null);
 	}
@@ -47,5 +53,11 @@ public class Column {
 		this.dataTypeName = dataTypeName;
 		this.generateWrong = generateWrong;
 		this.dataTypeParameters = dataTypeParameters;
+	}
+
+	@Override
+	public String toString() {
+		return "Column [columnName=" + columnName + ", dataTypeName=" + dataTypeName + ", dataTypeParameters="
+				+ dataTypeParameters + ", generateWrong=" + generateWrong + "]";
 	}
 }

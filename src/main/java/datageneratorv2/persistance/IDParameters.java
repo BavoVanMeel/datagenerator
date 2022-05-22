@@ -2,11 +2,31 @@ package datageneratorv2.persistance;
 
 import java.util.concurrent.atomic.AtomicLong;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
+@JsonTypeName(value = "ID")
 public class IDParameters extends DataTypeParameters {
 	private AtomicLong idCounter;
+	private String dataTypeName;
 	private boolean idUseDuplicates;
 	private boolean idUseBelowStartingPoint;
 	
+	public AtomicLong getIdCounter() {
+		return idCounter;
+	}
+
+	public void setIdCounter(AtomicLong idCounter) {
+		this.idCounter = idCounter;
+	}
+
+	public String getDataTypeName() {
+		return dataTypeName;
+	}
+
+	public void setDataTypeName(String dataTypeName) {
+		this.dataTypeName = dataTypeName;
+	}
+
 	public boolean isIdUseDuplicates() {
 		return idUseDuplicates;
 	}
@@ -22,9 +42,13 @@ public class IDParameters extends DataTypeParameters {
 	public void setIdUseBelowStartingPoint(boolean idUseBelowStartingPoint) {
 		this.idUseBelowStartingPoint = idUseBelowStartingPoint;
 	}
+	
+	public IDParameters() {
+	}
 
-	public IDParameters(Integer idStartingPoint, boolean idUseDuplicates, boolean idUseBelowStartingPoint) {
+	public IDParameters(Integer idStartingPoint, String dataTypeName, boolean idUseDuplicates, boolean idUseBelowStartingPoint) {
 		this.idCounter = new AtomicLong(idStartingPoint);
+		this.dataTypeName = dataTypeName;
 		this.idUseDuplicates = idUseDuplicates;
 		this.idUseBelowStartingPoint = idUseBelowStartingPoint;
 	}
@@ -33,4 +57,15 @@ public class IDParameters extends DataTypeParameters {
 		String result = String.valueOf(idCounter.getAndIncrement());
 		return result;
 	}
+	
+	public String getClassName() {
+		return "IDPARAMETRERS";
+	}
+
+	@Override
+	public String toString() {
+		return "IDParameters [idCounter=" + idCounter + ", idUseDuplicates=" + idUseDuplicates
+				+ ", idUseBelowStartingPoint=" + idUseBelowStartingPoint + "]";
+	}
+	
 }

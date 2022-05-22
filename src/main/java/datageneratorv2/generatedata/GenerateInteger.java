@@ -58,7 +58,7 @@ public class GenerateInteger implements GenerateData {
 		Integer option = ThreadLocalRandom.current().nextInt(0, amountOfOptions);
 		switch (option) {
 		case 0:
-			GenerateString generateString = new GenerateString(new StringParameters(10, false, false, false));
+			GenerateString generateString = new GenerateString(new StringParameters("String", 10, false, false, false));
 			result = generateString.generateRandomString(10);
 			break;
 		case 1:

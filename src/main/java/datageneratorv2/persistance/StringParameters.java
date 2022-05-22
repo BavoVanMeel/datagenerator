@@ -1,11 +1,23 @@
 package datageneratorv2.persistance;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
+@JsonTypeName(value = "String")
 public class StringParameters extends DataTypeParameters {
+	private String dataTypeName;
 	private Integer maxStringLength;
 	private boolean stringUseEmpty;
 	private boolean stringUseTooLong;
 	private boolean stringUseNull;
 	
+	public String getDataTypeName() {
+		return dataTypeName;
+	}
+
+	public void setDataTypeName(String dataTypeName) {
+		this.dataTypeName = dataTypeName;
+	}
+
 	public Integer getMaxStringLength() {
 		return maxStringLength;
 	}
@@ -38,12 +50,26 @@ public class StringParameters extends DataTypeParameters {
 		this.stringUseNull = stringUseNull;
 	}
 
-	public StringParameters(Integer maxStringLength, boolean stringUseEmpty, boolean stringUseTooLong,
+	public StringParameters() {
+	}
+
+	public StringParameters(String dataTypeName, Integer maxStringLength, boolean stringUseEmpty, boolean stringUseTooLong,
 			boolean stringUseNull) {
+		this.dataTypeName = dataTypeName;
 		this.maxStringLength = maxStringLength;
 		this.stringUseEmpty = stringUseEmpty;
 		this.stringUseTooLong = stringUseTooLong;
 		this.stringUseNull = stringUseNull;
+	}
+	
+	public String getClassName() {
+		return "STRINGPARAMETRERS";
+	}
+
+	@Override
+	public String toString() {
+		return "StringParameters [maxStringLength=" + maxStringLength + ", stringUseEmpty=" + stringUseEmpty
+				+ ", stringUseTooLong=" + stringUseTooLong + ", stringUseNull=" + stringUseNull + "]";
 	}
 	
 }

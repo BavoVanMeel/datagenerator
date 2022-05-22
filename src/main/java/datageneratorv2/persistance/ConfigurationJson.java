@@ -1,9 +1,15 @@
 package datageneratorv2.persistance;
 
-public class Table {
+import java.util.List;
+
+public class ConfigurationJson {
+	private List<Column> columns;
 	private Integer amountOfRows;
 	private Integer amountOfBadRows;
-	private ColumnList columns;
+
+	public List<Column> getColumns() {
+		return columns;
+	}
 	
 	public Integer getAmountOfRows() {
 		return amountOfRows;
@@ -21,36 +27,21 @@ public class Table {
 		this.amountOfBadRows = amountOfBadRows;
 	}
 
-	public ColumnList getColumns() {
-		return columns;
-	}
-
-	public void setColumns(ColumnList columns) {
+	public void setColumns(List<Column> columns) {
 		this.columns = columns;
 	}
 	
-	public Table() {
+	public ConfigurationJson() {
 	}
-
-	public Table(ColumnList columns) {
+	
+	public ConfigurationJson(List<Column> columns) {
 		this(columns, 0, 0);
 	}
 
-	public Table(ColumnList columns, Integer amountOfRows, Integer amountOfBadRows) {
+	public ConfigurationJson(List<Column> columns, Integer amountOfRows, Integer amountOfBadRows) {
 		this.columns = columns;
 		this.amountOfRows = amountOfRows;
 		this.amountOfBadRows = amountOfBadRows;
 	}
-
-//	@Override
-//	public String toString() {
-//		String columns = "";
-//		for (Column column : this.getColumns()) {
-//			columns += column.toString() + " ";
-//		}
-//		return "Table [amountOfRows=" + amountOfRows + ", amountOfBadRows=" + amountOfBadRows + ", columns=" + columns
-//				+ "]";
-//	}	
-	
 	
 }

@@ -6,10 +6,10 @@ import java.util.List;
 import datageneratorv2.datatypes.Heading;
 import datageneratorv2.filehandling.CSVHandler;
 import datageneratorv2.persistance.Column;
+import datageneratorv2.persistance.ConfigurationJson;
 import datageneratorv2.persistance.IDParameters;
 import datageneratorv2.persistance.IntegerParameters;
 import datageneratorv2.persistance.StringParameters;
-import datageneratorv2.persistance.Table;
 
 public class GenerateController {
 	private List<Heading> headings;
@@ -19,17 +19,17 @@ public class GenerateController {
 	}
 	
 	// Methodes should create file with data and return the path as a string value
-	public String generateDataFile(String fileNameTest, String fileNameValidation, Table table) {
+	public String generateDataFile(String fileNameTest, String fileNameValidation, ConfigurationJson config) {
 		String filePathTest = "src/main/resources/" + fileNameTest + ".csv";
 		String filePathValidation = "src/main/resources/" + fileNameValidation + ".csv";
-		GenerateResult generateResult = generateData(table);
+		GenerateResult generateResult = generateData(config);
 		CSVHandler csvHandler = new CSVHandler();
 		csvHandler.writeCSV(generateResult.getTestData(), ",", filePathTest);
 		csvHandler.writeCSV(generateResult.getValidationData(), ",", filePathValidation);
 		return filePathTest;
 	}
 	
-	private GenerateResult generateData(Table table) {
+	private GenerateResult generateData(ConfigurationJson config) {
 		/*
 		 * if (totalBadRecords > totalRecords) { throw new
 		 * NumberOutOfBoundsException("Amount of bad records should not be " +
@@ -46,17 +46,17 @@ public class GenerateController {
 		testData.add(headingList);
 		validationData.add(headingList);
 		
-		List<Column> columns = table.getColumns();
-		Integer totalRows = table.getAmountOfRows();
-		Integer totalBadRows = table.getAmountOfBadRows();
+		List<Column> columns = config.getColumns();
+		Integer totalRows = config.getAmountOfRows();
+		Integer totalBadRows = config.getAmountOfBadRows();
 		Integer totalColumns = columns.size();
 		String[][] result = new String[totalRows][totalColumns];
 		String[][] badResults = new String[totalRows][totalColumns];
 		for (int i = 0; i < totalColumns; i++) {
 			Column column = columns.get(i);
-			switch (column.getDataTypeName()) {
-			case "ID":
-				IDParameters idParams = (IDParameters) column.getDataTypeDetail();
+			switch (column.getDataTypeParameters().getClass().getSimpleName()) {
+			case "IDParameters":
+				IDParameters idParams = (IDParameters) column.getDataTypeParameters();
 				GenerateID generateID = new GenerateID(idParams);
 				for (int j = 0; j < totalRows; j++) {
 					if (j < totalRows - totalBadRows) {
@@ -69,8 +69,9 @@ public class GenerateController {
 					}
 				}
 				break;
-			case "String":
-				StringParameters stringParams = (StringParameters) column.getDataTypeDetail();
+				// TODO: case aangepast naar klassenamen dus testen + lijn in config verwijderen
+			case "StringParameters":
+				StringParameters stringParams = (StringParameters) column.getDataTypeParameters();
 				GenerateString generateString = new GenerateString(stringParams);
 				for (int j = 0; j < totalRows; j++) {
 					if (j < totalRows - totalBadRows) {
@@ -83,8 +84,8 @@ public class GenerateController {
 					}
 				}
 				break;
-			case "Integer":
-				IntegerParameters integerParams = (IntegerParameters) column.getDataTypeDetail();
+			case "IntegerParameters":
+				IntegerParameters integerParams = (IntegerParameters) column.getDataTypeParameters();
 				GenerateInteger generateInteger = new GenerateInteger(integerParams);
 				for (int j = 0; j < totalRows; j++) {
 					if (j < totalRows - totalBadRows) {

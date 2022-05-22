@@ -19,7 +19,7 @@ public class ConfigurationWriter {
 	public void generateConfig(Table table, String fileName) {
 		JSONObject configuration = new JSONObject();
         try {
-			configuration.put("name", "Configuration test");
+			configuration.put("name", "Configuration");
 			
 			// Table
 			JSONObject tableConfig = new JSONObject();
@@ -38,12 +38,12 @@ public class ConfigurationWriter {
 				JSONObject params = new JSONObject();
 				switch (column.getDataTypeName()) {
 				case "ID":
-					IDParameters idParams = (IDParameters) column.getDataTypeDetail();
+					IDParameters idParams = (IDParameters) column.getDataTypeParameters();
 					params.put("idUseDuplicates", idParams.isIdUseDuplicates());
 					params.put("idUseBelowStartingPoint", idParams.isIdUseBelowStartingPoint());
 					break;
 				case "Integer":
-					IntegerParameters integerParams = (IntegerParameters) column.getDataTypeDetail();
+					IntegerParameters integerParams = (IntegerParameters) column.getDataTypeParameters();
 					params.put("minIntegerAmount", integerParams.getMinIntegerAmount());
 					params.put("maxIntegerAmount", integerParams.getMaxIntegerAmount());
 					params.put("integerUseOutOfBounds", integerParams.isIntegerUseOutOfBounds());
@@ -51,7 +51,7 @@ public class ConfigurationWriter {
 					params.put("integerUseNull", integerParams.isIntegerUseNull());
 					break;
 				case "String":
-					StringParameters stringParams = (StringParameters) column.getDataTypeDetail();
+					StringParameters stringParams = (StringParameters) column.getDataTypeParameters();
 					params.put("maxStringLength", stringParams.getMaxStringLength());
 					params.put("stringUseEmpty", stringParams.isStringUseEmpty());
 					params.put("stringUseTooLong", stringParams.isStringUseTooLong());
@@ -59,7 +59,7 @@ public class ConfigurationWriter {
 					break;
 				}
 				
-				columnConfig.put("params", params);
+				columnConfig.put("dataTypeParameters", params);
 				columnConfig.put("generateWrong", column.isGenerateWrong());
 				columnList.add(columnConfig);
 			}

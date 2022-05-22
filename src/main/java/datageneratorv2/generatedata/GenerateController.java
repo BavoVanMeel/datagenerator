@@ -111,50 +111,6 @@ public class GenerateController {
 			validationData.add(rowValidation);
 		}
 		GenerateResult generateResult = new GenerateResult(testData, validationData);
-//		GenerateID generateID = new GenerateID(1);
-//		GenerateInteger generateInteger = new GenerateInteger(1, 5);
-//		GenerateString generateString = new GenerateString(50);
-//		GenerateDate generateDate = new GenerateDate("yyyy-MM-dd", LocalDate.of(2000, 1, 1), LocalDate.now());
-//		for (int i = 0; i < (dataOptions.getAmountOfRows() - dataOptions.getAmountOfBadRows()); i++) {
-//			String[] record = new String[headings.size()];
-//			for (int j = 0; j < headings.size(); j++) {
-//				switch (headings.get(j).getHighestHeadingDataType().getName()) {
-//				case "ID":
-//					record[j] = generateID.generateRight();
-//					break;
-//				case "Integer":
-//					record[j] = generateInteger.generateRight(); 
-//					break;
-//				case "String":
-//					record[j] = generateString.generateRight();
-//					break;
-//				case "Date":
-//					record[j] = generateDate.generateRight();
-//					break;
-//				default:
-//				}
-//			}
-//			list.add(record);
-//		}
-//		
-//		for (int i = 0; i < (dataOptions.getAmountOfBadRows()); i++) {
-//			String[] record = new String[headings.size()];
-//			for (int j = 0; j < headings.size(); j++) {
-//				switch (headings.get(j).getHighestHeadingDataType().getName()) {
-//				case "ID":
-//					record[j] = generateID.generateRight();
-//					break;
-//				case "Integer":
-//					record[j] = generateInteger.generateWrong(); 
-//					break;
-//				case "String":
-//					record[j] = generateString.generateWrong();
-//					break;
-//				default:
-//				}
-//			}
-//			list.add(record);
-//		}
 		long stop = System.nanoTime();
 		long timeElapsed = (stop - start) / 1000000;
 		long timePerRecord = totalRows / timeElapsed;

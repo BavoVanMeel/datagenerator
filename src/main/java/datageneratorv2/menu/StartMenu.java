@@ -7,6 +7,8 @@ import datageneratorv2.datatypes.Heading;
 import datageneratorv2.datatypes.ProcessInputData;
 import datageneratorv2.filehandling.CSVHandler;
 import datageneratorv2.filehandling.configuration.ConfigurationReader;
+import datageneratorv2.filehandling.configuration.ConfigurationWriter;
+import datageneratorv2.generatedata.GenerateController;
 import datageneratorv2.persistance.Column;
 import datageneratorv2.persistance.ConfigurationJson;
 
@@ -23,6 +25,7 @@ public class StartMenu {
 		Integer option = readInteger();
 		ConfigurationJson config = null;
 		if (option == 1) {
+			// Optie om inlees bestand te kiezen
 			List<String[]> csvInput = CSVHandler.readCSV("src/main/resources/accounts_to_migrate.csv");
 			List<Heading> headings = ProcessInputData.process(csvInput);
 			DataTypeMenu dataTypeMenu = new DataTypeMenu();
@@ -33,6 +36,15 @@ public class StartMenu {
 		}
 		if (option == 2) {
 			config = loadConfiguration();
+		}
+		
+		// Optie om bestandstype van uitvoer te kiezen
+		GenerateController generateController = new GenerateController();
+		generateController.generateDataFile("accounts_test_data", "accounts_validation_data", config);
+		
+		if (option == 1) {
+			ConfigurationWriter configurationWriter = new ConfigurationWriter();
+			configurationWriter.generateConfig(config, "configuration");
 		}
 		return config;
 	}

@@ -117,9 +117,9 @@ public class GenerateController {
 		GenerateResult generateResult = new GenerateResult(testData, validationData);
 		long stop = System.nanoTime();
 		long timeElapsed = (stop - start) / 1000000;
-		long timePerRecord = totalRows / timeElapsed;
+		// long timePerRecord = totalRows / stop;
 		System.out.println("Generating complete: " + totalRows + " records in " + timeElapsed + " milliseconds.");
-		System.out.println("Avarage amount of records generated per millisecond: " + timePerRecord + ".");
+		// System.out.println("Avarage amount of records generated per millisecond: " + timePerRecord + ".");
 		return generateResult;
 	}
 

@@ -19,8 +19,8 @@ public class ConfigurationWriter {
 	public void generateConfig(ConfigurationJson config, String fileName) {
 		JSONObject tableConfig = new JSONObject();
         try {			
-			tableConfig.put("amount_of_rows", config.getAmountOfRows());
-			tableConfig.put("amount_of_bad_rows", config.getAmountOfBadRows());
+			tableConfig.put("amountOfRows", config.getAmountOfRows());
+			tableConfig.put("amountOfBadRows", config.getAmountOfBadRows());
 			
 			// Column
 			List<JSONObject> columnList = new ArrayList<JSONObject>();
@@ -36,6 +36,7 @@ public class ConfigurationWriter {
 				case "ID":
 					IDParameters idParams = (IDParameters) column.getDataTypeParameters();
 					params.put("dataTypeName", idParams.getDataTypeName());
+					params.put("idStartingPoint", idParams.getIdStartingPoint());
 					params.put("idUseDuplicates", idParams.isIdUseDuplicates());
 					params.put("idUseBelowStartingPoint", idParams.isIdUseBelowStartingPoint());
 					break;
